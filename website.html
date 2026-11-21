@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewpoint" content="width=device-width, initial-scale=1.0">
+<title>❤️ Will You Be My Valentine? </title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+    overflow:hidden;
+    background:linear-gradient(135deg,#ff758c,#ff7eb3,#ff9a9e);
+    height:100vh;
+}
+
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:0;
+}
+
+.container{
+    position:relative;
+    z-index:2;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:white;
+    padding:20px;
+}
+
+.card{
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(15px);
+    padding:45px;
+    border-radius:25px;
+    box-shadow:0 15px 35px rgba(0,0,0,.25);
+    max-width:650px;
+    animation:pop 1s ease;
+}
+
+@keyframes pop{
+    from{
+        transform:scale(.7);
+        opacity:0;
+    }
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+h1{
+    font-size:3rem;
+    margin-bottom:15px;
+}
+
+.message{
+    font-size:1.25rem;
+    line-height:1.8;
+    margin:20px 0;
+}
+
+.heart{
+    font-size:70px;
+    animation:beat 1s infinite;
+}
+
+@keyframes beat{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.25);}
+}
+
+.buttons{
+    margin-top:30px;
+    position:relative;
+    height:90px;
+}
+
+button{
+    border:none;
+    padding:15px 35px;
+    border-radius:50px;
+    cursor:pointer;
+    font-size:1.2rem;
+    transition:.3s;
+    position:absolute;
+}
+
+#yes{
+    background:#ff1744;
+    color:white;
+    left:35%;
+}
+
+#yes:hover{
+    transform:scale(1.08);
+}
+
+#no{
+    background:white;
+    color:#ff1744;
+    right:25%;
+}
+
+.final{
+    display:none;
+    animation:fade 1s;
+}
+
+@keyframes fade{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+.final h2{
+    font-size:3rem;
+    margin:20px;
+}
+
+.final p{
+    font-size:1.4rem;
+}
+
+.confetti{
+    position:fixed;
+    width:10px;
+    height:10px;
+    pointer-events:none;
+}
+
+.footer{
+    position:absolute;
+    bottom:15px;
+    width:100%;
+    text-align:center;
+    color:white;
+    opacity:.8;
+    z-index:3;
+}
+
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+
+<div class="container">
+
+<div class="card" id="proposal">
+
+<div class="heart">❤️</div>
+
+<h1>Will You Be My Valentine? <div "Baby❤️"></div>Baby❤️</h1>
+
+<div class="message">
+From the moment you came into my life,
+every day became brighter, every smile became sweeter,
+and every heartbeat carried your name.
+<br><br>
+You make ordinary moments feel magical.
+I don't know what tomorrow holds,
+but I know I'd love to spend it with you.
+<br><br>
+So here's a question from the bottom of my heart...
+</div>
+
+<div class="buttons">
+<button id="yes">💖 YES 💖</button>
+<button id="no">🙈 NO</button>
+</div>
+
+</div>
+
+<div class="card final" id="success">
+
+<div style="font-size:90px;">💍❤️🎉</div>
+
+<h2>YAY!! ❤️</h2>
+
+<p>
+You just made me the happiest person alive! 💖
+<br><br>
+Happy Valentine's Day! 🌹
+<br><br>
+May our story always be filled with love,
+laughter, adventures, and countless beautiful memories.
+</p>
+
+</div>
+
+</div>
+
+<div class="footer">
+Made with ❤️ for my cutiepie
+</div>
+
+<script>
+
+// Moving NO button
+const no=document.getElementById("no");
+
+no.addEventListener("mouseover",moveButton);
+no.addEventListener("click",moveButton);
+
+function moveButton(){
+
+const w=window.innerWidth-150;
+const h=window.innerHeight-80;
+
+const x=Math.random()*w;
+const y=Math.random()*h;
+
+no.style.left=x+"px";
+no.style.top=y+"px";
+no.style.right="auto";
+
+}
+
+// YES
+document.getElementById("yes").onclick=function(){
+
+document.getElementById("proposal").style.display="none";
+document.getElementById("success").style.display="block";
+
+launchConfetti();
+
+}
+
+// Confetti
+function launchConfetti(){
+
+for(let i=0;i<250;i++){
+
+let c=document.createElement("div");
+
+c.className="confetti";
+
+document.body.appendChild(c);
+
+const colors=[
+"#ff1744",
+"#ff4081",
+"#ffeb3b",
+"#00e676",
+"#40c4ff",
+"#ffffff",
+"#ff9100"
+];
+
+c.style.background=colors[Math.floor(Math.random()*colors.length)];
+
+c.style.left=Math.random()*window.innerWidth+"px";
+c.style.top="-20px";
+
+const size=5+Math.random()*10;
+c.style.width=size+"px";
+c.style.height=size+"px";
+c.style.borderRadius=Math.random()>.5?"50%":"0";
+
+const duration=3000+Math.random()*3000;
+const rotate=Math.random()*720;
+
+c.animate([
+{
+transform:`translateY(0px) rotate(0deg)`,
+opacity:1
+},
+{
+transform:`translateY(${window.innerHeight+50}px) translateX(${(Math.random()-0.5)*300}px) rotate(${rotate}deg)`,
+opacity:0
+}
+],{
+duration:duration,
+easing:"ease-out"
+});
+
+setTimeout(()=>c.remove(),duration);
+
+}
+
+}
+
+// Floating Hearts
+function createHeart(){
+
+const heart=document.createElement("div");
+
+heart.innerHTML="❤️";
+
+heart.style.position="fixed";
+heart.style.left=Math.random()*window.innerWidth+"px";
+heart.style.bottom="-40px";
+heart.style.fontSize=(20+Math.random()*25)+"px";
+heart.style.pointerEvents="none";
+heart.style.opacity=.8;
+heart.style.zIndex=1;
+
+document.body.appendChild(heart);
+
+heart.animate([
+{
+transform:"translateY(0px)",
+opacity:.8
+},
+{
+transform:`translateY(-${window.innerHeight+100}px) translateX(${(Math.random()-.5)*150}px)`,
+opacity:0
+}
+],{
+duration:6000+Math.random()*4000,
+easing:"linear"
+});
+
+setTimeout(()=>heart.remove(),10000);
+
+}
+
+setInterval(createHeart,350);
+
+// Background particles
+const canvas=document.getElementById("bg");
+const ctx=canvas.getContext("2d");
+
+function resize(){
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+}
+
+resize();
+
+window.addEventListener("resize",resize);
+
+let particles=[];
+
+for(let i=0;i<80;i++){
+
+particles.push({
+
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*3+1,
+dx:(Math.random()-.5)*0.4,
+dy:(Math.random()-.5)*0.4
+
+});
+
+}
+
+function animate(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="rgba(255,255,255,.5)";
+
+particles.forEach(p=>{
+
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fill();
+
+p.x+=p.dx;
+p.y+=p.dy;
+
+if(p.x<0||p.x>canvas.width)p.dx*=-1;
+if(p.y<0||p.y>canvas.height)p.dy*=-1;
+
+});
+
+requestAnimationFrame(animate);
+
+}
+
+animate();
+
+</script>
+
+</body>
+</html>
